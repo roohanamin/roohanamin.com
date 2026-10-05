@@ -74,10 +74,10 @@ export function LoginForm({ configured }: { configured: boolean }) {
             type="text"
             inputMode="numeric"
             autoComplete="one-time-code"
-            pattern="[0-9]{6}"
+            pattern="[0-9]{6,10}"
             minLength={6}
-            maxLength={6}
-            placeholder="6-digit code"
+            maxLength={10}
+            placeholder="Code from your email"
             required
             disabled={verifying}
           />

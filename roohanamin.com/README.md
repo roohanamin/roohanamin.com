@@ -24,7 +24,7 @@ http://localhost:3000/preview is an interactive sample-data preview **only in de
 5. In Authentication → URL Configuration, set the Site URL to `https://roohanamin.com`, and add `https://roohanamin.com/auth/callback` to Redirect URLs. Add only the actual preview or localhost callback URLs you need for testing.
 6. Enable the Email provider and allow new-user signup.
 7. **Configure a production SMTP provider before allowing public users.** Supabase's default mail service is restricted and is not suitable for sending sign-in links to arbitrary visitors. Verify the sending domain and test delivery, spam folders, expired links, and rate limits.
-8. Set Email OTP Length to **6**. Customize both the Magic Link and Confirm Signup email templates with a code (and optionally a fallback link):
+8. Keep Supabase's configured Email OTP Length (the app accepts 6–10 digits; this project uses 8). Customize both the Magic Link and Confirm Signup email templates with a code (and optionally a fallback link):
 
 ```html
 <h2>Your Weight Log sign-in code: {{ .Token }}</h2>

@@ -40,11 +40,11 @@ export async function verifyCode(
       token: z
         .string()
         .trim()
-        .regex(/^\d{6}$/),
+        .regex(/^\d{6,10}$/),
     })
     .safeParse({ email: form.get("email"), token: form.get("token") });
   if (!input.success)
-    return { error: "Enter your email address and the six-digit code." };
+    return { error: "Enter your email address and the code from your email." };
   const client = await createClient();
   const { error } = await client.auth.verifyOtp({
     ...input.data,

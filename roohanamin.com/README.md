@@ -24,9 +24,14 @@ http://localhost:3000/preview is an interactive sample-data preview **only in de
 5. In Authentication → URL Configuration, set the Site URL to `https://roohanamin.com`, and add `https://roohanamin.com/auth/callback` to Redirect URLs. Add only the actual preview or localhost callback URLs you need for testing.
 6. Enable the Email provider and allow new-user signup.
 7. **Configure a production SMTP provider before allowing public users.** Supabase's default mail service is restricted and is not suitable for sending sign-in links to arbitrary visitors. Verify the sending domain and test delivery, spam folders, expired links, and rate limits.
-8. For sign-in links that work across devices, customize both the Magic Link and Confirm Signup email templates with this link:
+8. Set Email OTP Length to **6**. Customize both the Magic Link and Confirm Signup email templates with a code (and optionally a fallback link):
 
 ```html
+<h2>Your Weight Log sign-in code: {{ .Token }}</h2>
+<p>
+  Return to Weight Log and enter this code. If you installed the app on your
+  iPhone, enter it inside the app.
+</p>
 <a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email"
   >Sign in to Weight Log</a
 >
@@ -53,7 +58,7 @@ The existing production deployment was serving the commit that deleted the app. 
 
 ## Behavior and privacy
 
-- New and returning users request a sign-in link; the first successful sign-in creates an account.
+- New and returning users request an email code and enter it inside the app; the first successful sign-in creates an account. This keeps installed iPhone users in their app instead of opening a separate Safari session.
 - Sessions persist in browser cookies and refresh through `proxy.ts`.
 - Every read and mutation checks the authenticated user. PostgreSQL RLS independently restricts rows by `auth.uid()`.
 - All data lives in Supabase. There is no local-only account or weight database.

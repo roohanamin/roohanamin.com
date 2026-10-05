@@ -53,8 +53,8 @@ export function WeightLog({
   const newId = useRef<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   // Resolve today's date on the device, never in the server's timezone.
-  // eslint-disable-next-line react-hooks/set-state-in-effect -- One client-only hydration update avoids a wrong calendar day on the server.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- One client-only hydration update avoids a wrong calendar day on the server.
     setDate(localDate());
   }, []);
   const latest = entries[0];
@@ -331,6 +331,7 @@ export function WeightLog({
                   value={date}
                   min="1900-01-01"
                   max="2100-12-31"
+                  onInput={(event) => setDate(event.currentTarget.value)}
                   onChange={(event) => setDate(event.target.value)}
                   required
                   disabled={pending}

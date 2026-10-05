@@ -9,11 +9,20 @@ export async function GET(request: NextRequest) {
     const client = await createClient();
     const { error } = await client.auth.verifyOtp({ token_hash, type });
     if (!error)
-      return NextResponse.redirect(new URL("/weight", request.url), {
-        headers: { "Cache-Control": "private, no-store" },
-      });
+      return NextResponse.redirect(
+        new URL("/weight", process.env.NEXT_PUBLIC_SITE_URL || request.url),
+        {
+          headers: { "Cache-Control": "private, no-store" },
+        },
+      );
   }
-  return NextResponse.redirect(new URL("/login?expired=1", request.url), {
-    headers: { "Cache-Control": "private, no-store" },
-  });
+  return NextResponse.redirect(
+    new URL(
+      "/login?expired=1",
+      process.env.NEXT_PUBLIC_SITE_URL || request.url,
+    ),
+    {
+      headers: { "Cache-Control": "private, no-store" },
+    },
+  );
 }
